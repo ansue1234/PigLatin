@@ -7,6 +7,8 @@ public void setup() {
 	for (int i = 0 ; i < lines.length; i++) {
 	  System.out.println(pigLatin(lines[i]));
 	}
+	System.out.println();
+	System.out.println("Lowell Hymn");
 	for (int j = 0 ; j < hymns.length; j++) {
 	  System.out.println(hymn(hymns[j]));
 	}
@@ -21,9 +23,8 @@ public int findFirstVowel(String sWord)
 	int c = 0;
   	String vowel = new String("aeiou");
   
-  	for(int j = 0; j<sWord.length(); j++){//int j = 0; j<word.length(); j++
+  	for(int j = 0; j<sWord.length(); j++){
     	for(int i = 0; i<vowel.length(); i++){
-      //System.out.println(word.charAt(j)+", "+vowel.charAt(i));
       		if(sWord.charAt(j)==vowel.charAt(i)){
         		c++;
         		return(j);
@@ -41,7 +42,7 @@ public String pigLatin(String sWord)
 //postcondition: returns the pig latin equivalent of sWord
 {
 	
-	if(sWord.substring(0,2).equals("qu")){
+	if(sWord.length()>=1&&sWord.substring(0,2).equals("qu")){
 		return(sWord.substring(2,sWord.length())+sWord.substring(0,2)+"ay");
 	}
 	else if(findFirstVowel(sWord)==0)
@@ -56,25 +57,27 @@ public String pigLatin(String sWord)
 		String b = new String(sWord.substring(0,findFirstVowel(sWord)));
 		return ( a + b + "ay");
 	}
-	return "Hi";
+	return "";
 }
 
 public String hymn(String l){
 	ArrayList<Integer> index = new ArrayList<Integer>();
 	ArrayList<String> word = new ArrayList<String>();
+	ArrayList<String> ans = new ArrayList<String>();
+	index.add(0);
 	for(int i = 0; i<l.length(); i++){
-		index.add(0,0);
 		if(l.substring(i,i+1).equals(" ")||l.substring(i,i+1).equals(",")||l.substring(i,i+1).equals(".")||l.substring(i,i+1).equals(".")){
 			index.add(i);
 		}
 	}
-	for(int i = 0; i<l.length(); i++){
-		for(int j = 0; j<index.size()-1; j++){
-			word.add(0,(l.substring(index.get(0),index.get(1))));
-			word.add(l.substring(index.get(j)+1,index.get(j+1)));
+	word.add(l.substring(0,index.get(1)));
+	for(int j = 1; j<index.size()-1; j++){
+		word.add(l.substring(index.get(j)+1,index.get(j+1)));
 			
-		}
 	}
-	System.out.println(word);
-	return("Hi");
+	for(int f = 0;f<word.size(); f++){
+		ans.add(pigLatin(word.get(f)));
+		System.out.print(ans.get(f)+" ");
+	}
+	return("");
 }
